@@ -1,0 +1,12 @@
+<% node[:monit][:unicorn][:worker_count].times do |i| %>
+check process unicorn_worker_<%= i %> with pidfile <%= File.join(node[:monit][:unicorn][:pid_dir], "worker.#{i}.pid") %>
+  <% unless node[:monit][:notify_email].nil? || node[:monit][:notify_email] == '' %>
+  alert <%= node[:monit][:notify_email] %> only on { pid }
+  <% end %>
+  if changed pid 2 times within 60 cycles then alert
+  if memory usage > 16% for 1 cycles then
+    exec "/etc/init.d/unicorn kill_worker 0"
+  if cpu is greater than 50% for 2 cycles then
+    exec "/etc/init.d/unicorn kill_worker 0"
+
+<% end %>
