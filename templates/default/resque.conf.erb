@@ -14,7 +14,7 @@ check process resque_worker_<%= counter %> with pidfile <%= @node[:monit][:resqu
 
   stop program = "/bin/sh -c 'cd <%= @node[:monit][:resque][:app_root] %> && kill -TERM `cat tmp/pids/resque_worker.<%= counter %>.pid` && rm -f tmp/pids/resque_worker.<%= counter %>.pid; exit 0;'"
 
-  if totalmem is greater than 1500 MB for 10 cycles then restart
+  if totalmem is greater than 3000 MB for 10 cycles then restart
 
   <% counter += 1 %>
   <% end %>
